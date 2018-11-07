@@ -1,4 +1,4 @@
-# Project Title
+# Parking-Recognition
 
 The Parking-Recognition project is being built to encourage safer parking within parking garages. The program will use image recognition to identify if a car is parked in more than 1 spot. If it is, then the a warning sound will be emitted after a set time interval to alert the driver that their car is parked incorrectly. If the driver chooses to ignore the warning,then an email will be sent to the Garage Manager notifying them of the situation.
 
