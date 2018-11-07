@@ -1,5 +1,6 @@
 from os import chdir, listdir
 from os.path import isfile, join
+import pandas as pd
 
 class DataRetrieval(object):
 
@@ -8,12 +9,15 @@ class DataRetrieval(object):
         self.images = None
         self.labels = None
 
+    
     def retrieve_from_images(self):
         pass
     
 
-    """Changes the current working directory to that of where the images to train on are"""
-    def traverse_to_image_directory(self):
-        training_data = "./data" # Climb to training data directory
-        chdir(path=training_data)
-        pass
+    """Returns tuple with the images URL and labels associated with each image. (Correct, Incorrect)"""
+    def get_image_label_df(self, training_data="./data"):
+        #chdir(path=training_data)
+        images_path = ''
+        images = [f for f in listdir(training_data) if isfile(join(images_path, f))]
+        labels = [item for item in images if item.endswith(".jpg")]
+        return (images, labels)
