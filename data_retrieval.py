@@ -31,5 +31,13 @@ class DataRetrieval(object):
         # Transform dictionary of images and labels to a Pandas Dataframe
         df = self.dict_of_lists_to_df(image_label)
         return df
-#a = DataRetrieval()
+    
+    def split_to_attribute_set_and_class_label(self):
+        """Splits the DataFrame into 2 numpy arrays: the attribute set (X) and class label (y)"""
+        df = self.get_image_label_df()
+        X = df.iloc[:, :df.shape[1]-1]
+        y = df['label']
+        return (X, y)
+a = DataRetrieval()
 #print(a.get_image_label_df())
+print(a.split_to_attribute_set_and_class_label()[0])
