@@ -20,7 +20,7 @@ class Model(object):
         self.model.add(Dense(num_classes, activation='softmax'))
     
     def train(self):
-        pass
+        pass                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
         
 a = Model()
 
