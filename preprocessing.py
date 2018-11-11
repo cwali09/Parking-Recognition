@@ -12,6 +12,7 @@ class Preprocessing(DataRetrieval):
         self.X = self.crop_images(self.X)
 
     def crop_images(self, X):
+        """"Returns an array of cropped images (600x600x3)"""
         cropped_images = []
 
         # Iterating through series X
