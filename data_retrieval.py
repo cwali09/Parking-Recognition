@@ -18,7 +18,7 @@ class DataRetrieval(object):
     """Turn a dictionary of lists into a Pandas Dataframe"""
     def dict_of_lists_to_df(self, dict_of_lists):
         return pd.DataFrame.from_dict(dict_of_lists)
-
+    
     """Return a Dataframe with each image's URL, and if they're correctly parked (Correct=1, Incorrect=0)"""
     def get_image_label_df(self, training_data="./data"):
         current_directory = os.path.dirname(os.path.abspath(__file__))

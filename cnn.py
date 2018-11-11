@@ -4,9 +4,19 @@ from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten
 from data_retrieval import DataRetrieval
 # Convolution Neural Network
 
-class Model(object):
+class DataSet(object):
     def __init__(self):
-        self.df = DataRetrieval().get_image_label_df()
+        self.x_train = None
+        self.x_valid = None
+        self.x_test = None
+        self.y_train = None
+        self.y_valid = None
+        self.y_test = None
+
+
+class Model(DataRetrieval):
+    def __init__(self):
+        self.df = self.get_image_label_df()
         # Get number of columns (attributes)
         num_classes = self.df.shape[1]
 
@@ -19,6 +29,7 @@ class Model(object):
         self.model.add(Dense(1000, activation='relu'))
         self.model.add(Dense(num_classes, activation='softmax'))
     
+        
     def train(self):
         pass                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
         
