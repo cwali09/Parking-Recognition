@@ -9,9 +9,9 @@ class Preprocessing(DataRetrieval):
 
     def __init__(self):
         self.X, self.y = DataRetrieval().split_to_attribute_set_and_class_label()
-        self.X = self.crop_images(self.X)
+        self.X = self.crop_images_from_url(self.X)
 
-    def crop_images(self, X):
+    def crop_images_from_url(self, X):
         """"Returns an array of cropped images (600x600x3)"""
         cropped_images = []
 
