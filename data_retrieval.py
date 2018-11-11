@@ -3,6 +3,12 @@ import os.path
 import pandas as pd
 import numpy as np
 
+# DataRetrieval is responsible for getting all the image URLs and labels (correct or incorrect)
+# and organizing them into a single Pandas DataFrame (dict_of_lists_to_df and get_image_label_df). 
+# Once the dataframe has been made then it uses split_to_attribute_set_and_class_label
+# to return a tuple of pandas series objects (the attribute set, the target class) so 
+# the Preprocessing class can work its magic.
+
 class DataRetrieval(object):
 
     def __init__(self):
@@ -42,6 +48,7 @@ class DataRetrieval(object):
         y = df['label'].values
 
         return (X, y)
+
 a = DataRetrieval()
 #print(a.get_image_label_df())
 # print(a.split_to_attribute_set_and_class_label()[0])

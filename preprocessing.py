@@ -12,7 +12,7 @@ class Preprocessing(DataRetrieval):
         self.X = self.crop_images_from_url(self.X)
 
     def crop_images_from_url(self, X):
-        """"Returns an array of cropped images (600x600x3)"""
+        """"Returns an array of cropped images (600x600x3) from inputted Pandas series of URLs"""
         cropped_images = []
 
         # Iterating through series X
