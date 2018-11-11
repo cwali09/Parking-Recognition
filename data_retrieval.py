@@ -12,8 +12,9 @@ import numpy as np
 class DataRetrieval(object):
 
     def __init__(self):
-        self.images = None
-        self.labels = None
+        self.df = self.get_image_label_df(self)
+        self.images, self.labels = self.split_to_attribute_set_and_class_label()
+
 
     """Turn a dictionary of lists into a Pandas Dataframe"""
     def dict_of_lists_to_df(self, dict_of_lists):
@@ -46,8 +47,13 @@ class DataRetrieval(object):
         df = self.get_image_label_df()
         X = df.iloc[:, :df.shape[1]-1].values
         y = df['label'].values
-
         return (X, y)
+
+    # def get_split(self):
+    #     return self.split_to_attribute_set_and_class_label()
+    
+    # def get_df(self):
+    #     return self.get_image_label_df()
 
 a = DataRetrieval()
 #print(a.get_image_label_df())
