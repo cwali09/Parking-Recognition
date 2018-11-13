@@ -2,6 +2,7 @@ from data_retrieval import DataRetrieval
 import pandas as pd
 import numpy as np
 import cv2
+from keras.preprocessing.image import ImageDataGenerator
 
 class Preprocessing(DataRetrieval):
     # Is it better to use self.X and self.y in crop_images directly, or should I pass them
@@ -33,17 +34,34 @@ class Preprocessing(DataRetrieval):
             cropped_img = cv2.resize(image, (600, 600))
             cropped_images.append(cropped_img)
             #cropped_images = np.append(cropped_images, cropped_img)
-        cropped_images = np.array(cropped_images)
+        cropped_images = np.array(cropped_images, dtype='float')
         return cropped_images
+    
+    
+    def process(self, X_train):
+        # this will do preprocessing and realtime data augmentation
+        #X_train = pd.Series.as_matrix(X_train)
+        print(X_train)
+        print(X_train.shape)
+        datagen = ImageDataGenerator(
+            featurewise_center=False,             # set input mean to 0 over the dataset
+            samplewise_center=False,              # set each sample mean to 0
+            featurewise_std_normalization=False,  # divide inputs by std of the dataset
+            samplewise_std_normalization=False,   # divide each input by its std
+            zca_whitening=False,                  # apply ZCA whitening
+            rotation_range=20,                     # randomly rotate images in the range (degrees, 0 to 180)
+            width_shift_range=0.2,                # randomly shift images horizontally (fraction of total width)
+            height_shift_range=0.2,               # randomly shift images vertically (fraction of total height)
+            horizontal_flip=True,                 # randomly flip images
+            vertical_flip=False)                  # randomly flip images
+        datagen.fit(X_train)
+        return X_train
     
     def get_images_and_labels(self):
         #return self.X, self.y
         X = self.crop_images(self.get_images_from_url(DataRetrieval().images))
         y = DataRetrieval().labels
         return X, y
-    
-    def enable_edge_detection(self, images):
-        pass
 
 a = Preprocessing()
 #print(a.X.shape)
