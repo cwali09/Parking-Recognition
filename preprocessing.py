@@ -55,7 +55,7 @@ class Preprocessing(DataRetrieval):
             horizontal_flip=True,                 # randomly flip images
             vertical_flip=False)                  # randomly flip images
         datagen.fit(X_train)
-        return X_train
+        return X_train, datagen
     
     def get_images_and_labels(self):
         #return self.X, self.y
