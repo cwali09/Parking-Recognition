@@ -171,9 +171,8 @@ a = Model(a)
 for image in a.X_test:
     image = image.reshape(1, 600, 600, 3)
     a.predict(image)
-#image = a.X_test[0].reshape(1, 600, 600, 3)
 a.predict(image)
-#a.save()
+a.save()
 #a.load()
 
 
