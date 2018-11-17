@@ -1,4 +1,5 @@
 from os import chdir, listdir
+from sys import platform
 import os.path
 import pandas as pd
 import numpy as np
@@ -24,11 +25,20 @@ class DataRetrieval(object):
     def get_image_label_df(self, training_data="./data"):
         current_directory = os.path.dirname(os.path.abspath(__file__))
         image_label = {'image': [], 'label': []}
+        print(current_directory)
 
         # Get all images in correct folder
-        correct_directory = current_directory + '\data\correct\\'
-        incorrect_directory = current_directory + '\data\incorrect\\'
-
+        # For Windows
+        if (platform == 'win32'):
+            correct_directory = current_directory + '\data\correct\\'
+            incorrect_directory = current_directory + '\data\incorrect\\'
+            print("Windows correct directory: %s" % correct_directory)
+        else:
+            # For linux/mac
+            correct_directory = current_directory + '/data/correct/'
+            incorrect_directory = current_directory + '/data/incorrect/'
+            print("Linux correct directory: %s" % correct_directory)
+        
         for image in listdir(correct_directory):
             if (image.endswith(".JPG")):
                 image_label['image'].append(correct_directory + image)
@@ -38,6 +48,8 @@ class DataRetrieval(object):
             if (image.endswith(".JPG")):
                 image_label['image'].append(incorrect_directory + image)
                 image_label['label'].append(0)
+                print("Image URL is: %s" %  incorrect_directory+image)
+                print("Image Label is: %d" % 0)
         # Transform dictionary of images and labels to a Pandas Dataframe
         df = self.dict_of_lists_to_df(image_label)
         return df

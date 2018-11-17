@@ -1,6 +1,7 @@
 import random
 import os.path
 from os import listdir
+from sys import platform
 
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten
@@ -20,7 +21,11 @@ from preprocessing import Preprocessing
 
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = current_directory + '\models\model.h5'
+current_os = platform
+if (current_os == 'win32'):
+    MODEL_PATH = current_directory + '\models\model.h5'
+else:
+    MODEL_PATH = current_directory + '/models/model.h5'
 
 class DataSet(Preprocessing):
 
@@ -160,7 +165,7 @@ class Model(object):
         image = image/255
         probability = self.model.predict(image)[0][0]
         prediction = self.model.predict_classes(image)[0][0]
-        print(f'Probability is: {probability}, Prediction is: {prediction}')
+        print('Probability is: %d, Prediction is: %d' % probability, prediction)
         return prediction
 
 
