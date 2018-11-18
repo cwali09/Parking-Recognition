@@ -27,21 +27,24 @@ class Preprocessing(DataRetrieval):
 
     def crop_images(self, images):
         """"Returns an array of cropped images (600x600x3) from inputted Pandas series of URLs"""
+        #images = np.array(images)
         cropped_images = []
 
         # Iterating through series X
         for image in images:
-            # Each image is 3 dimensional. (Sample shape would be like (600, 600, 3)) -- (x,y,z)
-            cropped_img = cv2.resize(image, (IMG_WIDTH, IMG_LENGTH))
-            cv2.imshow('hello', cropped_img)
-            cv2.waitKey(3)
+            # Each image is 3 dimensional. (Sample shape would be like (600, 600, 3))
+            cropped_img = cv2.resize(image, (IMG_LENGTH, IMG_WIDTH))
             cropped_images.append(cropped_img)
+            #cropped_images = np.append(cropped_images, cropped_img)
         cropped_images = np.array(cropped_images, dtype='float')
         return cropped_images
     
     
     def process(self, X_train):
         # this will do preprocessing and realtime data augmentation
+        #X_train = pd.Series.as_matrix(X_train)
+        print(X_train)
+        print(X_train.shape)
         datagen = ImageDataGenerator(
             featurewise_center=False,             # set input mean to 0 over the dataset
             samplewise_center=False,              # set each sample mean to 0
@@ -61,3 +64,7 @@ class Preprocessing(DataRetrieval):
         X = self.crop_images(self.get_images_from_url(DataRetrieval().images))
         y = DataRetrieval().labels
         return X, y
+
+#a = Preprocessing()
+#print(a.X.shape)
+#print(a.X)

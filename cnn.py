@@ -107,8 +107,9 @@ class Model(object):
         num_classes = data_set.df.shape[1]-1
         num_rows = self.X_train.shape[0]
 
+        print ("INPUT SHAPE IS: %d, %d, %d" % (IMG_LENGTH, IMG_WIDTH, IMG_CHANNEL))
         self.model = Sequential()
-        self.model.add(Conv2D(32, kernel_size = (5, 5),strides = (1,1),activation='relu', input_shape = (IMG_LENGTH, IMG_WIDTH, IMG_CHANNEL)))
+        self.model.add(Conv2D(32, kernel_size = (5, 5),strides = (1,1),activation='relu', input_shape = (IMG_WIDTH, IMG_LENGTH, IMG_CHANNEL), data_format='channels_last'))
         self.model.add(MaxPooling2D(64, (5, 5)))
         self.model.add(Conv2D(64, (5,5), activation='relu'))
         self.model.add(MaxPooling2D(pool_size=(2,2)))
@@ -165,6 +166,7 @@ class Model(object):
     def predict(self, image):
         # Squash the image pixel values to between 0 and 1 (inclusive)
         image = image/255
+        print(image.shape)
         probability = self.model.predict(image)[0][0]
         prediction = self.model.predict_classes(image)[0][0]
         print('Probability is: %d, Prediction is: %d' % (probability, prediction))
