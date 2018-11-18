@@ -1,4 +1,4 @@
-from os import chdir, listdir, path
+from os import chdir, listdir, path, makedirs
 from sys import platform
 
 from data_retrieval import DataRetrieval
@@ -7,7 +7,24 @@ from cnn import DataSet, Model, current_directory, models_directory, current_os,
 from keras.models import load_model
 import keras.models
 
+from video_input import stream
 
+import cv2
+
+def check_models_directory_exists(models_path=models_directory):
+    if not path.exists(models_directory):
+        print("Models directory does not exist. Attempting to create...")
+        makedirs(models_directory)
+        if path.exists(models_directory):
+            print("Successfully created Models directory.")
+        else:
+            print("Could not create Models directory. ABORT")
+            exit()
+
+
+
+
+check_models_directory_exists()
 model = Model()
 
 if (current_os == "win32"):
@@ -18,3 +35,10 @@ if (current_os == "win32"):
         model.save()
     else:
         model.load(file_path = MODEL_PATH)
+else:
+    # For Linux
+    model.load(file_path=MODEL_PATH)
+    stream(model)
+    
+
+

@@ -61,8 +61,6 @@ class DataSet(Preprocessing):
         # X = self.df.iloc[:, :self.df.shape[1]-1] #images
         # y = self.df['label'] #label
         X, y = self.get_images_and_labels()
-        print(X.shape)
-        print(y.shape)
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random.randint(0, 100))
         X_valid, X_test, y_valid, y_test = train_test_split(X, y, test_size=0.5, random_state=random.randint(0, 100))
@@ -72,7 +70,6 @@ class DataSet(Preprocessing):
         X_valid /= 255
         X_test /= 255
 
-        print('X_train shape:', X_train.shape)
         print(X_train.shape[0], 'train samples')
         print(X_valid.shape[0], 'valid samples')
         print(X_test.shape[0], 'test samples')
@@ -108,7 +105,6 @@ class Model(object):
 
         num_classes = data_set.df.shape[1]-1
         num_rows = self.X_train.shape[0]
-        print(num_rows)
 
         self.model = Sequential()
         self.model.add(Conv2D(32, kernel_size = (5, 5),strides = (1,1),activation='relu', input_shape = (600, 600, 3)))
@@ -153,6 +149,7 @@ class Model(object):
             data_generator.fit(self.X_train)
             self.model.fit_generator(data_generator.flow(self.X_train, self.y_train, batch_size=batch_size), steps_per_epoch=self.X_train.shape[0], epochs=nb_epoch, validation_data=(self.X_valid, self.y_valid))
             score = self.model.evaluate(self.X_test, self.y_test, batch_size=batch_size)
+            print("The score is: ")
             print(score)    
     def save(self, file_path=MODEL_PATH):
         print("Saving model...")

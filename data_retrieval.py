@@ -13,11 +13,8 @@ import numpy as np
 class DataRetrieval(object):
 
     def __init__(self):
-        print("Retrieving data...")
         self.df = self.get_image_label_df(self)
         self.images, self.labels = self.split_to_attribute_set_and_class_label()
-        print("Done.")
-
 
     """Turn a dictionary of lists into a Pandas Dataframe"""
     def dict_of_lists_to_df(self, dict_of_lists):
