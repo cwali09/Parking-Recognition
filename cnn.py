@@ -24,8 +24,11 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 current_os = platform
 if (current_os == 'win32'):
     MODEL_PATH = current_directory + '\models\model.h5'
+    models_directory = current_directory + '\models\\'
+
 else:
     MODEL_PATH = current_directory + '/models/model.h5'
+    models_directory = current_directory + '/models/'
 
 class DataSet(Preprocessing):
 
@@ -84,9 +87,18 @@ class DataSet(Preprocessing):
 
 
 class Model(object):
-    def __init__(self, data_set):
+    def __init__(self):
+        self.X_train = None
+        self.X_valid = None
+        self.X_test = None
+        self.y_train = None
+        self.y_valid = None
+        self.y_test = None
+        self.model = None
+    
+    def build_model(self, data_set):
         data_set.build_dataset()
-        #self.X_train, self.datagen = data_set.process(data_set.X_train)
+
         self.X_train = data_set.X_train
         self.X_valid = data_set.X_valid
         self.X_test = data_set.X_test
@@ -94,7 +106,6 @@ class Model(object):
         self.y_valid = data_set.y_valid
         self.y_test = data_set.y_test
 
-        # Get number of columns (attributes)
         num_classes = data_set.df.shape[1]-1
         num_rows = self.X_train.shape[0]
         print(num_rows)
@@ -109,12 +120,13 @@ class Model(object):
         self.model.add(Dense(num_classes, activation='softmax'))
 
         # If models directory is empty, train and create a new model
-        models_directory = current_directory + '\models\\'
         if not listdir(models_directory):
             self.train(batch_size=1, nb_epoch=1)
             self.model.summary() #Only call this after fitting the data
         else:
             self.load(MODEL_PATH)
+
+    
         
     def train(self, batch_size=32, nb_epoch=40, data_augmentation=True):
         sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
@@ -124,10 +136,7 @@ class Model(object):
             print("Data augmentation is not true.")
             self.model.fit(self.X_train, self.y_train, epochs=nb_epoch, batch_size = batch_size, shuffle=True)
         else:
-        
-            print(self.X_train.shape)
-            print(self.y_train.shape)
-
+            print("Commencing data augmentation...")
             # this will do preprocessing and realtime data augmentation
             data_generator = ImageDataGenerator(
                 featurewise_center=False,             # set input mean to 0 over the dataset
@@ -143,42 +152,25 @@ class Model(object):
                         
             data_generator.fit(self.X_train)
             self.model.fit_generator(data_generator.flow(self.X_train, self.y_train, batch_size=batch_size), steps_per_epoch=self.X_train.shape[0], epochs=nb_epoch, validation_data=(self.X_valid, self.y_valid))
-
             score = self.model.evaluate(self.X_test, self.y_test, batch_size=batch_size)
-            print(score)
-
-        # self.model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
-    
+            print(score)    
     def save(self, file_path=MODEL_PATH):
         print("Saving model...")
         self.model.save(file_path)
-        print("Saved model.")
+        print("Successfully saved model.")
 
     def load(self, file_path=MODEL_PATH):
         print("Loading model...")
-        model = keras.models.load_model(file_path)
-        print("Loaded model.")
-        return model
+        self.model = keras.models.load_model(file_path)
+        print("Successfully loaded model.")
     
     def predict(self, image):
         # Squash the image pixel values to between 0 and 1 (inclusive)
         image = image/255
         probability = self.model.predict(image)[0][0]
         prediction = self.model.predict_classes(image)[0][0]
-        print('Probability is: %d, Prediction is: %d' % probability, prediction)
+        print('Probability is: %d, Prediction is: %d' % (probability, prediction))
         return prediction
-
-
-a = DataSet()
-a.build_dataset()
-# df = DataRetrieval().get_df()        
-a = Model(a)
-for image in a.X_test:
-    image = image.reshape(1, 600, 600, 3)
-    a.predict(image)
-a.predict(image)
-a.save()
-#a.load()
 
 
 
