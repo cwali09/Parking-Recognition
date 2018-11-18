@@ -7,7 +7,6 @@ from cnn import DataSet, Model, current_directory, models_directory, current_os,
 from keras.models import load_model
 import keras.models
 
-from video_input import stream
 from CONSTANTS import IMG_LENGTH, IMG_WIDTH, IMG_CHANNEL
 import cv2
 
@@ -37,6 +36,8 @@ if (current_os == "win32"):
         model.load(file_path = MODEL_PATH)
 else:
     # For Linux
+    from video_input import stream
+    
     model.load(file_path=MODEL_PATH)
     stream(model)
     
