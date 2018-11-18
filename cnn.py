@@ -17,6 +17,7 @@ import pandas as pd
 
 from data_retrieval import DataRetrieval
 from preprocessing import Preprocessing
+from CONSTANTS import IMG_CHANNEL, IMG_LENGTH, IMG_WIDTH
 # Convolution Neural Network
 
 
@@ -107,7 +108,7 @@ class Model(object):
         num_rows = self.X_train.shape[0]
 
         self.model = Sequential()
-        self.model.add(Conv2D(32, kernel_size = (5, 5),strides = (1,1),activation='relu', input_shape = (600, 600, 3)))
+        self.model.add(Conv2D(32, kernel_size = (5, 5),strides = (1,1),activation='relu', input_shape = (IMG_LENGTH, IMG_WIDTH, IMG_CHANNEL)))
         self.model.add(MaxPooling2D(64, (5, 5)))
         self.model.add(Conv2D(64, (5,5), activation='relu'))
         self.model.add(MaxPooling2D(pool_size=(2,2)))

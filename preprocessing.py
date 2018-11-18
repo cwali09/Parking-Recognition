@@ -1,4 +1,6 @@
 from data_retrieval import DataRetrieval
+from CONSTANTS import IMG_CHANNEL, IMG_LENGTH, IMG_WIDTH
+
 import pandas as pd
 import numpy as np
 import cv2
@@ -29,8 +31,10 @@ class Preprocessing(DataRetrieval):
 
         # Iterating through series X
         for image in images:
-            # Each image is 3 dimensional. (Sample shape would be like (600, 600, 3))
-            cropped_img = cv2.resize(image, (600, 600))
+            # Each image is 3 dimensional. (Sample shape would be like (600, 600, 3)) -- (x,y,z)
+            cropped_img = cv2.resize(image, (IMG_WIDTH, IMG_LENGTH))
+            cv2.imshow('hello', cropped_img)
+            cv2.waitKey(3)
             cropped_images.append(cropped_img)
         cropped_images = np.array(cropped_images, dtype='float')
         return cropped_images

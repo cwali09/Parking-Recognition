@@ -1,19 +1,21 @@
-import PiCamera
+import picamera
 import time
 import numpy as np
 
 from cnn import Model
+from CONSTANTS import IMG_CHANNEL, IMG_LENGTH, IMG_WIDTH
 
 def stream(model):
     while True:
         with picamera.PiCamera() as camera:
-            camera.resolution(600, 600)
-            camera.framerate = 24
-            image = np.empty((600, 600, 3), dtype=float)
+            camera.resolution(640, 480)
+            camera.framerate = 80
+            image = np.empty((IMG_LENGTH, IMG_WIDTH, IMG_CHANNEL), dtype=float)
             camera.capture(output, 'rgb')
 
-            image.reshape(1,600,600,3)
+            image.reshape(1,IMG_LENGTH,IMG_WIDTH, IMG_CHANNEL)
             prediction = model.predict(image)
+
 
 
             

@@ -7,8 +7,8 @@ from cnn import DataSet, Model, current_directory, models_directory, current_os,
 from keras.models import load_model
 import keras.models
 
-from video_input import stream
-
+#from video_input import stream
+from CONSTANTS import IMG_LENGTH, IMG_WIDTH, IMG_CHANNEL
 import cv2
 
 def check_models_directory_exists(models_path=models_directory):
@@ -38,7 +38,7 @@ if (current_os == "win32"):
 else:
     # For Linux
     model.load(file_path=MODEL_PATH)
-    stream(model)
+    #stream(model)
     
 
 
