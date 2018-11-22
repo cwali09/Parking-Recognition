@@ -19,6 +19,7 @@ def stream(model):
             camera.stop_preview()
             
             print(image.shape)
+            #image = cv2.resize(image, (IMG_LENGTH, IMG_WIDTH))
             image = image.reshape(1,IMG_WIDTH,IMG_LENGTH, IMG_CHANNEL)
             #image = image.reshape(1, 100, 100, 3)
             prediction = model.predict(image)
