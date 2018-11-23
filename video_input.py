@@ -11,8 +11,8 @@ def stream(model):
             camera.resolution = (IMG_WIDTH, IMG_LENGTH)
             camera.framerate = 24
             
-            #image = np.empty((IMG_WIDTH, IMG_LENGTH, IMG_CHANNEL), dtype=np.uint8)
-            image = np.empty((128, 128, IMG_CHANNEL,), dtype=np.uint8)
+            image = np.empty((IMG_WIDTH, IMG_LENGTH, IMG_CHANNEL), dtype=np.uint8)
+            #image = np.empty((128, 128, IMG_CHANNEL,), dtype=np.uint8)
             camera.start_preview()
             camera.capture(image, 'rgb')
             #time.sleep(2)
