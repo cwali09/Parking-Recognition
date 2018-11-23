@@ -64,7 +64,7 @@ class DataSet(Preprocessing):
         # y = self.df['label'] #label
         X, y = self.get_images_and_labels()
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.6, random_state=random.randint(0, 100))
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random.randint(0, 100))
         print(X_train[0])
         print("--------------")
         print(y_train[0])
@@ -73,7 +73,7 @@ class DataSet(Preprocessing):
         print("--------------")
         print(y_test[0])
         print("--------------")
-        X_valid, X_test, y_valid, y_test = train_test_split(X, y, test_size=0.3, random_state=random.randint(0, 100))
+        X_valid, X_test, y_valid, y_test = train_test_split(X, y, test_size=0.5, random_state=random.randint(0, 100))
 
         # Squash all pixel values to values between 0 and 1 (inclusive)
         X_train /= 255.0
@@ -157,7 +157,7 @@ class Model(object):
 
         # If models directory is empty, train and create a new model
         if not listdir(models_directory):
-            self.train(batch_size=16, nb_epoch=20)
+            self.train(batch_size=16, nb_epoch=3)
             self.model.summary() #Only call this after fitting the data
         else:
             self.load(MODEL_PATH)
