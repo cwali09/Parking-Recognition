@@ -45,8 +45,11 @@ if (current_os == "win32"):
 else:
     # For Linux
     from video_input import stream
+    from test_against_validation_linux import test_validation
+
     
     model.load(file_path=MODEL_PATH)
+    #test_validation(model)
     stream(model)
     
 
