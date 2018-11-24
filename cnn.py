@@ -157,7 +157,7 @@ class Model(object):
 
         # If models directory is empty, train and create a new model
         if not listdir(models_directory):
-            self.train(batch_size=16, nb_epoch=3)
+            self.train(batch_size=16, nb_epoch=5)
             self.model.summary() #Only call this after fitting the data
         else:
             self.load(MODEL_PATH)
