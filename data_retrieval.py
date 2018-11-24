@@ -30,11 +30,18 @@ class DataRetrieval(object):
         if (platform == 'win32'):
             correct_directory = current_directory + '\data\correct\\'
             incorrect_directory = current_directory + '\data\incorrect\\'
+            empty_directory = current_directory + '\data\empty\\'
+
         else:
             # For linux/mac
             correct_directory = current_directory + '/data/correct/'
             incorrect_directory = current_directory + '/data/incorrect/'
+            empty_directory = current_directory + '/data/empty/'
 
+        for image in listdir(empty_directory):
+            if (image.endswith(".jpg") or image.endswith(".JPG")):
+                image_label['image'].append(empty_directory + image)
+                image_label['label'].append(2)
         for image in listdir(correct_directory):
             if (image.endswith(".jpg") or image.endswith(".JPG")):
                 image_label['image'].append(correct_directory + image)
