@@ -5,7 +5,7 @@ from random import shuffle
 
 from CONSTANTS import IMG_LENGTH, IMG_WIDTH, IMG_CHANNEL
 
-#numpy.set_printoptions(threshold=numpy.nan)
+numpy.set_printoptions(threshold=numpy.nan)
 
 def test_validation(model):
     current_directory = os.path.dirname(os.path.abspath(__file__))
