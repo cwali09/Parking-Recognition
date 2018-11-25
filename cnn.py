@@ -152,12 +152,12 @@ class Model(object):
         self.model.add(Dense(512))
         self.model.add(Activation('relu'))
         self.model.add(Dropout(0.5))
-        self.model.add(Dense(num_classes_one_hot))
+        self.model.add(Dense(3)) #How many different labels the softmax will have to consider -- 3 (correct, incorrect, empty)
         self.model.add(Activation('softmax'))
 
         # If models directory is empty, train and create a new model
         if not listdir(models_directory):
-            self.train(batch_size=16, nb_epoch=10)
+            self.train(batch_size=16, nb_epoch=2)
             self.model.summary() #Only call this after fitting the data
         else:
             self.load(MODEL_PATH)
