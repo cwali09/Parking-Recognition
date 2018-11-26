@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 
 from cnn import Model, current_directory
+from led_blink import blink
 from CONSTANTS import IMG_CHANNEL, IMG_LENGTH, IMG_WIDTH
 
 np.set_printoptions(threshold=np.nan)
@@ -25,8 +26,10 @@ def stream(model):
             #print(image.shape)
             image = cv2.resize(image, (IMG_LENGTH, IMG_WIDTH))
             image = image.reshape(1,IMG_WIDTH,IMG_LENGTH, IMG_CHANNEL)
-            print(image)
+            #print(image)
             prediction = model.predict(image)
+            if (prediction == 0):
+                blink()
 
 
 
