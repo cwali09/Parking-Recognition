@@ -1,7 +1,3 @@
-# 01_blink.py
-# From the code for the Electronics Starter Kit for the Raspberry Pi by MonkMakes.com
-
-
 import RPi.GPIO as GPIO
 import time
 
