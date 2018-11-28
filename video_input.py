@@ -5,6 +5,7 @@ import cv2
 
 from cnn import Model, current_directory
 from led_blink import blink
+from email_sender import send_email
 from CONSTANTS import IMG_CHANNEL, IMG_LENGTH, IMG_WIDTH
 
 np.set_printoptions(threshold=np.nan)
@@ -16,7 +17,10 @@ def stream(model):
         camera.zoom = x, y, w, h
         camera.rotation = 180
         camera.start_preview()
-        while True:            
+        sleep_counter = 0
+        while True:
+            sleep_counter += 1
+                        
             image = np.empty((IMG_WIDTH, IMG_LENGTH, IMG_CHANNEL), dtype=np.uint8)
             camera.capture('image.jpg')
             image = cv2.imread('./image.jpg')
@@ -30,6 +34,10 @@ def stream(model):
             prediction = model.predict(image)
             if (prediction == 0):
                 blink()
+                if sleep_counter >= 30:
+                    send_email()
+                    sleep_counter = 0
+
 
 
 
