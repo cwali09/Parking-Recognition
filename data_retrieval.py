@@ -40,15 +40,18 @@ class DataRetrieval(object):
 
         for image in listdir(empty_directory):
             if (image.endswith(".jpg") or image.endswith(".JPG")):
+                print("Appending empty...", image)
                 image_label['image'].append(empty_directory + image)
                 image_label['label'].append(2)
         for image in listdir(correct_directory):
             if (image.endswith(".jpg") or image.endswith(".JPG")):
+                print("Appending correct...", image)
                 image_label['image'].append(correct_directory + image)
                 image_label['label'].append(1)
         # Get all images in incorrect folder
         for image in listdir(incorrect_directory):
             if (image.endswith(".jpg") or image.endswith(".JPG")):
+                print("Appending incorrect...", image)
                 image_label['image'].append(incorrect_directory + image)
                 image_label['label'].append(0)
         # Transform dictionary of images and labels to a Pandas Dataframe

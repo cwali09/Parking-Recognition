@@ -23,6 +23,7 @@ class Preprocessing(DataRetrieval):
             for image_url in contained_url:
                 # Each image is 3 dimensional. (Sample shape would be like (600, 600, 3))
                 img = cv2.imread(image_url)
+                print(img.size)
                 # cv2.imshow('image', img)
                 # sleep(10)
                 images.append(img)
@@ -34,6 +35,7 @@ class Preprocessing(DataRetrieval):
 
         # Iterating through series X
         for image in images:
+            # print(image.size)
             # Each image is 3 dimensional. (Sample shape would be like (600, 600, 3))
             cropped_img = cv2.resize(image, (IMG_LENGTH, IMG_WIDTH))
             cropped_images.append(cropped_img)
