@@ -17,9 +17,8 @@ def stream(model):
         camera.zoom = x, y, w, h
         camera.rotation = 180
         camera.start_preview()
-        sleep_counter = 0
+        incorrect_parking_counter = 0
         while True:
-            sleep_counter += 1
                         
             image = np.empty((IMG_WIDTH, IMG_LENGTH, IMG_CHANNEL), dtype=np.uint8)
             camera.capture('image.jpg')
@@ -33,10 +32,16 @@ def stream(model):
             #print(image)
             prediction = model.predict(image)
             if (prediction == 0):
+                incorrect_parking_counter += 1
                 blink()
-                if sleep_counter >= 30:
+                if incorrect_parking_counter >= 15 and is_same_misparked_car != True:
+                    print("Sending email...")
                     send_email()
-                    sleep_counter = 0
+                    is_same_misparked_car = True
+                    incorrect_parking_counter = 0
+            else:
+                is_same_misparked_car = False
+                incorrect_parking_counter = 0
 
 
 
