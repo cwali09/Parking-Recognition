@@ -13,9 +13,9 @@ How it works:
 
 The program is trained with Machine learning algorithms with Tensorflow, and should output the following to the console:
 
-0 - If a car is parked incorrectly
-1 - The car is parked correctly
-2 - There is no car parked in the spot
+0 - If a car is parked incorrectly;
+1 - The car is parked correctly;
+2 - There is no car parked in the spot;
 
 With the LED lights installed on the Raspi, it should shine red when a car is parked incorrectly and send an email to the parking administration to alert them.
 
